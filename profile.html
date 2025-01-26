@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration - MediCompare</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f8fc;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 20px 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 10px solid black;
+    }
+
+    .form-container h2 {
+      margin-bottom: 15px;
+      color: #2b7f91;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: #2b7f91;
+    }
+
+    .error {
+      color: #e63946;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    .submit-btn {
+      background-color: #2b7f91;
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .submit-btn:hover {
+      background-color: #25676f;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <div class="error" id="nameError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <div class="error" id="emailError"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <div class="error" id="passwordError"></div>
+      </div>
+
+      <button type="submit" class="submit-btn">Register</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      let isValid = true;
+
+      // Clear previous error messages
+      document.getElementById('nameError').textContent = '';
+      document.getElementById('emailError').textContent = '';
+      document.getElementById('passwordError').textContent = '';
+
+      // Validate name
+      if (!name) {
+        document.getElementById('nameError').textContent = 'Name is required.';
+        isValid = false;
+      }
+
+      // Validate email
+      const emailRegex = /^[^\\s@]+@[^\s@]+\\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        document.getElementById('emailError').textContent = 'Enter a valid email.';
+        isValid = false;
+      }
+
+      // Validate password
+      const passwordRegex = /^(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        document.getElementById('passwordError').textContent =
+          'Password must be at least 8 characters, include 1 capital letter and 1 number.';
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert('Registration successful!');
+        // Optionally save to local storage
+        const user = { name, email, password };
+        localStorage.setItem('user', JSON.stringify(user));
+        form.reset();
+      }
+    });
+  </script>
+</body>
+</html>

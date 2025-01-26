@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Price Comparison</title>
+    <link rel="icon" type="image/png" href="logo.webp">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f9f9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(to right, #56c6c6, #2f8f8f);
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h2 {
+            text-align: center;
+            color: #2f8f8f;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input, select {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #e0f7f7;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 0.75rem;
+            font-size: 1rem;
+            background-color: #56c6c6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2f8f8f;
+        }
+
+        .results {
+            margin-top: 2rem;
+        }
+
+        .results table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .results th, .results td {
+            border: 1px solid #e0f7f7;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .results th {
+            background-color: #f0fefe;
+            color: #2f8f8f;
+        }
+
+        .results tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script>
+        function comparePrices(event) {
+            event.preventDefault();
+            const medicineName = document.getElementById('medicine-name').value.toLowerCase(); // Ensure input is lowercase
+            const resultsTable = document.getElementById('results-table');
+    
+            // Medicine price data
+            const priceData = {
+                'paracetamol 500mg': [
+                    { store: 'Government Store', price: 'Rs.10' },
+                    { store: 'Private Store', price: 'Rs.40' },
+                    { store: 'Saving Cost', price: 'Rs.30' },
+                ],
+                'aspirin 75mg': [
+                    { store: 'Government Store', price: 'Rs.25' },
+                    { store: 'Private Store', price: 'Rs.80' },
+                    { store: 'Saving Cost', price: 'Rs.55' },
+                ],
+                'amoxicillin 500mg': [
+                    { store: 'Government Store', price: 'Rs.50' },
+                    { store: 'Private Store', price: 'Rs.150' },
+                    { store: 'Saving Cost', price: 'Rs.100' },
+                ],
+                'metformin 500mg': [
+                    { store: 'Government Store', price: 'Rs.15' },
+                    { store: 'Private Store', price: 'Rs.80' },
+                    { store: 'Saving Cost', price: 'Rs.65' },
+                ],
+                'ciprofloxacin 500mg': [  
+                    { store: 'Government Store', price: 'Rs.40' },
+                    { store: 'Private Store', price: 'Rs.120' },
+                    { store: 'Saving Cost', price: 'Rs.80' },
+                ],
+                'Loratadine 10mg': [
+                    { store: 'Government Store', price: 'Rs.10' },
+                    { store: 'Private Store', price: 'Rs.50' },
+                    { store: 'Saving Cost', price: 'Rs.40' },
+                ],
+                'cetirizine 10mg': [
+                      { store: 'Government Store', price: 'Rs.10' },
+                      { store: 'Private Store', price: 'Rs.60' },
+                     { store: 'Saving Cost', price: 'Rs.50' },
+],
+            };
+    
+            // Clear previous results
+            resultsTable.innerHTML = '<tr><th>Store</th><th>Price</th></tr>';
+    
+            // Find the medicine from the price data (case insensitive)
+            const medicineData = priceData[medicineName];
+    
+            if (medicineData) {
+                // Populate table with data for the searched medicine
+                medicineData.forEach(entry => {
+                    const row = `<tr><td>${entry.store}</td><td>${entry.price}</td></tr>`;
+                    resultsTable.innerHTML += row;
+                });
+                document.querySelector('.results').style.display = 'block';
+            } else {
+                // If medicine not found
+                resultsTable.innerHTML += '<tr><td colspan="2">No price data available for this medicine</td></tr>';
+                document.querySelector('.results').style.display = 'block';
+            }
+        }
+    </script>
+    
+</head>
+<body>
+
+<header>
+    <h1>Medicine Price Comparison</h1>
+</header>
+
+<div class="container">
+    <h2>Compare Medicine Prices</h2>
+    <form onsubmit="comparePrices(event)">
+        <label for="medicine-name">Enter Medicine Name:</label>
+        <input type="text" id="medicine-name" placeholder="e.g., Paracetamol" required>
+
+        <button type="submit">Compare Prices</button>
+    </form>
+
+    <div class="results" style="display: none;">
+        <h3>Price Comparison Results:</h3>
+        <table id="results-table">
+            <tr>
+                <th>Store</th>
+                <th>Price</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
